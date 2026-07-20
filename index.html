@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jordan Hayes — Full-Stack Engineer &amp; AI Automation Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1F17;
+    --panel:#12271D;
+    --panel-2:#0E2019;
+    --line:#2E4A3B;
+    --line-soft:#1C3327;
+    --ink:#F6F8F5;
+    --dim:#9BB3A3;
+    --brass:#FFFFFF;
+    --teal:#8FCBA6;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.5;
+    overflow-x:hidden;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:48px 48px;
+    background-position:-1px -1px;
+  }
+  ::selection{ background:var(--brass); color:var(--bg); }
+
+  a{ color:inherit; text-decoration:none; }
+  .mono{ font-family:var(--mono); }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--brass); display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:''; width:18px; height:1px; background:var(--brass); display:inline-block; }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(10,17,28,.82); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:var(--mono); font-weight:600; font-size:15px; letter-spacing:.02em; }
+  .brand-mark{
+    width:20px; height:20px; border:1px solid var(--brass);
+    clip-path:polygon(30% 0,100% 0,100% 70%,70% 100%,0 100%,0 30%);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .brand-mark span{ width:6px; height:6px; background:var(--brass); display:block; }
+
+  nav.links{ display:flex; gap:36px; }
+  nav.links a{
+    font-family:var(--mono); font-size:13px; color:var(--dim);
+    position:relative; padding:2px 0; transition:color .2s ease;
+  }
+  nav.links a::after{
+    content:''; position:absolute; left:0; bottom:-4px; width:0; height:1px;
+    background:var(--brass); transition:width .25s ease;
+  }
+  nav.links a:hover{ color:var(--ink); }
+  nav.links a:hover::after{ width:100%; }
+
+  .nav-toggle{ display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
+  .nav-toggle span{ width:22px; height:2px; background:var(--ink); display:block; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+    padding:140px 0 80px; position:relative;
+  }
+  .hero .wrap{ position:relative; }
+  .hero-trace{ position:absolute; inset:0; pointer-events:none; overflow:visible; }
+  .hero-trace path{
+    fill:none; stroke:var(--line); stroke-width:1.5;
+    stroke-dasharray:1400; stroke-dashoffset:1400;
+    animation:draw 2.2s cubic-bezier(.4,0,.2,1) forwards .3s;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+
+  .hero-role{ margin-bottom:22px; }
+  h1.hero-name{
+    font-family:var(--mono); font-weight:700;
+    font-size:clamp(48px, 9vw, 112px);
+    line-height:.95; letter-spacing:-.01em;
+    text-transform:uppercase;
+    opacity:0; animation:riseIn .8s ease forwards .6s;
+  }
+  h1.hero-name .sub{
+    display:block; font-size:.32em; color:var(--dim); font-weight:500;
+    letter-spacing:.02em; margin-top:14px; text-transform:none;
+  }
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:translateY(0); } }
+
+  .hero-pitch{
+    max-width:560px; color:var(--dim); font-size:17px; margin-top:26px;
+    opacity:0; animation:riseIn .8s ease forwards .9s;
+  }
+  .hero-cta{ margin-top:40px; display:flex; gap:16px; flex-wrap:wrap; opacity:0; animation:riseIn .8s ease forwards 1.1s; }
+
+  .btn{
+    font-family:var(--mono); font-size:13px; letter-spacing:.04em;
+    padding:13px 24px; border:1px solid var(--line);
+    clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);
+    position:relative; display:inline-flex; align-items:center; gap:8px;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .btn::before{
+    content:''; position:absolute; inset:0; background:var(--brass);
+    transform:scaleX(0); transform-origin:left; z-index:-1;
+    transition:transform .25s ease;
+  }
+  .btn.primary{ border-color:var(--brass); color:var(--bg); background:var(--brass); }
+  .btn.primary:hover{ background:transparent; color:var(--brass); }
+  .btn.ghost{ color:var(--ink); }
+  .btn.ghost:hover{ border-color:var(--ink); }
+
+  .scroll-cue{
+    position:absolute; bottom:36px; left:32px; font-family:var(--mono); font-size:11px;
+    color:var(--dim); display:flex; align-items:center; gap:10px; letter-spacing:.14em;
+  }
+  .scroll-cue .line{ width:1px; height:36px; background:linear-gradient(var(--brass), transparent); animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:.3; } 50%{ opacity:1; } }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{ padding:130px 0; position:relative; }
+  .section-head{ margin-bottom:56px; }
+  .section-head h2{
+    font-family:var(--mono); font-size:clamp(28px,4vw,42px); font-weight:600;
+    margin-top:14px; letter-spacing:-.01em;
+  }
+  .section-head p{ color:var(--dim); max-width:520px; margin-top:14px; font-size:15px; }
+
+  .reveal{ opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  /* ---------- WORK / LIST + STICKY DETAIL ---------- */
+  #work-layout{
+    display:grid; grid-template-columns:320px 1fr; gap:56px; align-items:start;
+  }
+  #work-grid{ display:flex; flex-direction:column; gap:10px; }
+
+  .card{
+    position:relative; background:transparent; text-align:left; cursor:pointer;
+    padding:18px 10px 18px 22px; color:var(--dim); font-family:var(--sans);
+    border:none; border-left:2px solid var(--line-soft); overflow:hidden;
+    transition:border-color .25s ease, padding-left .25s ease, background .25s ease;
+  }
+  .card:hover{ border-color:var(--dim); padding-left:28px; background:rgba(255,255,255,.02); }
+  .card.active{ border-color:var(--ink); padding-left:28px; background:var(--panel); }
+
+  .card .tag{ font-family:var(--mono); font-size:11px; color:var(--teal); letter-spacing:.1em; transition:color .2s ease; display:block; }
+  .card.active .tag{ color:var(--ink); }
+  .card .title{ font-family:var(--mono); font-size:19px; color:var(--ink); margin-top:8px; font-weight:600; display:block; }
+  .card .sub{ font-size:13px; color:var(--dim); margin-top:6px; line-height:1.5; display:block; }
+  .card .expand-cue{ display:none; }
+
+  #detail-panel{
+    border:1px solid var(--line-soft); background:var(--panel-2);
+    padding:36px; clip-path:polygon(20px 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%,0 20px);
+    min-height:280px; position:sticky; top:110px;
+  }
+  #detail-panel.updating{ animation:panelIn .4s ease; }
+  @keyframes panelIn{ from{ opacity:.35; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+  #detail-panel .ph-tag{ font-family:var(--mono); font-size:12px; color:var(--teal); letter-spacing:.1em; }
+  #detail-panel h3{ font-family:var(--mono); font-size:22px; margin-top:8px; }
+  #detail-panel p{ color:var(--dim); margin-top:14px; max-width:640px; font-size:15px; }
+  .stack-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+  .pill{
+    font-family:var(--mono); font-size:11px; color:var(--dim); border:1px solid var(--line);
+    padding:5px 10px; letter-spacing:.03em;
+  }
+  .empty-state{ color:var(--dim); font-family:var(--mono); font-size:13px; }
+
+  @media (max-width:900px){
+    #work-layout{ grid-template-columns:1fr; gap:28px; }
+    #detail-panel{ position:static; }
+  }
+
+  /* ---------- STACK / LAYERS ---------- */
+  .layer{
+    display:grid; grid-template-columns:160px 1fr; gap:24px; align-items:start;
+    padding:24px 0; border-top:1px solid var(--line-soft);
+  }
+  .layer:last-child{ border-bottom:1px solid var(--line-soft); }
+  .layer .lname{ font-family:var(--mono); font-size:13px; color:var(--brass); letter-spacing:.06em; padding-top:6px; }
+  .layer .stack-row .pill{ transition:border-color .2s ease, color .2s ease; }
+  .layer .stack-row .pill:hover{ border-color:var(--teal); color:var(--ink); }
+
+  @media (max-width:600px){
+    .layer{ grid-template-columns:1fr; gap:10px; }
+  }
+
+  /* ---------- ABOUT / SPEC SHEET ---------- */
+  .spec-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .spec-list .row{
+    display:flex; justify-content:space-between; gap:20px; padding:14px 0; border-top:1px solid var(--line-soft);
+    font-family:var(--mono); font-size:13px;
+  }
+  .spec-list .row:last-child{ border-bottom:1px solid var(--line-soft); }
+  .spec-list .k{ color:var(--dim); letter-spacing:.05em; }
+  .spec-list .v{ color:var(--ink); text-align:right; }
+  .about-copy p{ color:var(--dim); font-size:15.5px; margin-bottom:16px; }
+  .about-copy p:first-child{ color:var(--ink); font-size:18px; }
+
+  @media (max-width:760px){
+    .spec-grid{ grid-template-columns:1fr; gap:36px; }
+  }
+
+  /* ---------- CONTACT ---------- */
+  footer#contact{
+    border-top:1px solid var(--line-soft); padding:120px 0 60px; position:relative;
+  }
+  .contact-email{
+    font-family:var(--mono); font-weight:600; font-size:clamp(28px,6vw,58px);
+    display:inline-block; border-bottom:1px solid var(--line); padding-bottom:8px;
+    transition:border-color .2s ease, color .2s ease; word-break:break-all;
+  }
+  .contact-email:hover{ border-color:var(--brass); color:var(--brass); }
+  .contact-row{ display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:32px; margin-top:50px; }
+  .social-list{ display:flex; gap:26px; font-family:var(--mono); font-size:13px; }
+  .social-list a{ color:var(--dim); position:relative; }
+  .social-list a::after{
+    content:''; position:absolute; left:0; bottom:-4px; width:0; height:1px; background:var(--teal); transition:width .25s ease;
+  }
+  .social-list a:hover{ color:var(--ink); }
+  .social-list a:hover::after{ width:100%; }
+  .copyright{ font-family:var(--mono); font-size:11px; color:var(--dim); margin-top:70px; letter-spacing:.05em; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+    html{ scroll-behavior:auto; }
+  }
+
+  @media (max-width:760px){
+    nav.links{ display:none; }
+    .nav-toggle{ display:flex; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="brand-mark"><span></span></span>JORDAN HAYES</a>
+    <nav class="links">
+      <a href="#work">Work</a>
+      <a href="#stack">Stack</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap">
+      <svg class="hero-trace" viewBox="0 0 1180 500" preserveAspectRatio="none">
+        <path d="M -20 420 L 260 420 L 300 380 L 900 380 L 940 420 L 1200 420" />
+        <path d="M -20 70 L 180 70 L 220 110 L 1200 110" />
+      </svg>
+
+      <div class="eyebrow">Full-Stack Engineer / AI Automation Specialist</div>
+      <h1 class="hero-name">
+        Jordan Hayes
+        <span class="sub">— placeholder name, swap this for yours —</span>
+      </h1>
+      <p class="hero-pitch">
+        I design and ship systems that connect, reason, and run themselves —
+        from the interface down to the infrastructure. This copy is a
+        placeholder: replace it with your own pitch.
+      </p>
+      <div class="hero-cta">
+        <a href="#work" class="btn primary">View the work</a>
+        <a href="#contact" class="btn ghost">Get in touch</a>
+      </div>
+    </div>
+    <div class="scroll-cue"><span class="line"></span>SCROLL</div>
+  </section>
+
+  <!-- ================= WORK ================= -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Selected Work</div>
+        <h2>Five systems, shipped.</h2>
+        <p>Pick a project from the list — details open beside it.</p>
+      </div>
+
+      <div id="work-layout" class="reveal">
+        <div id="work-grid"></div>
+
+        <div id="detail-panel">
+          <div class="empty-state">// select a project on the left to inspect the system</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STACK ================= -->
+  <section id="stack">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Stack</div>
+        <h2>Four layers, one throughline.</h2>
+        <p>What actually ships, top to bottom.</p>
+      </div>
+
+      <div class="reveal">
+        <div class="layer">
+          <div class="lname">FRONTEND</div>
+          <div class="stack-row">
+            <span class="pill">React</span><span class="pill">Next.js</span>
+            <span class="pill">TypeScript</span><span class="pill">Tailwind CSS</span>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="lname">BACKEND</div>
+          <div class="stack-row">
+            <span class="pill">Node.js</span><span class="pill">Python / FastAPI</span>
+            <span class="pill">PostgreSQL</span><span class="pill">GraphQL</span>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="lname">AI &amp; AUTOMATION</div>
+          <div class="stack-row">
+            <span class="pill">LangGraph</span><span class="pill">OpenAI / Anthropic APIs</span>
+            <span class="pill">Vector DBs</span><span class="pill">Temporal</span><span class="pill">n8n</span>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="lname">INFRASTRUCTURE</div>
+          <div class="stack-row">
+            <span class="pill">AWS</span><span class="pill">Docker</span>
+            <span class="pill">Kubernetes</span><span class="pill">Terraform</span><span class="pill">CI/CD</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">About</div>
+        <h2>Spec sheet.</h2>
+      </div>
+
+      <div class="spec-grid reveal">
+        <div class="about-copy">
+          <p>Placeholder bio — replace with your own. I build full-stack products
+          and the automation layer underneath them: pipelines that move data,
+          agents that make decisions, and interfaces people actually enjoy using.</p>
+          <p>Most of my work sits at the seam between "someone has to do this
+          manually" and "a system should just handle it" — and I like living
+          on that seam.</p>
+        </div>
+        <div class="spec-list">
+          <div class="row"><span class="k">FOCUS</span><span class="v">Full-stack systems that automate themselves</span></div>
+          <div class="row"><span class="k">BASE</span><span class="v">Remote — available worldwide</span></div>
+          <div class="row"><span class="k">EXPERIENCE</span><span class="v">X+ years in production</span></div>
+          <div class="row"><span class="k">STATUS</span><span class="v">Open to full-time &amp; contract work</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= CONTACT ================= -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="eyebrow reveal">Contact</div>
+    <a href="mailto:hello@example.com" class="contact-email reveal">hello@example.com</a>
+    <div class="contact-row reveal">
+      <div class="social-list">
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Twitter / X</a>
+      </div>
+    </div>
+    <div class="copyright">© 2026 JORDAN HAYES — built with intent, not templates.</div>
+  </div>
+</footer>
+
+<script>
+  // ---- nav mobile toggle ----
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.querySelector('nav.links');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.style.display === 'flex';
+    navLinks.style.display = open ? 'none' : 'flex';
+    navLinks.style.cssText += 'position:fixed; top:64px; left:0; right:0; background:#0A111C; flex-direction:column; padding:20px 32px; border-bottom:1px solid #263548; display:' + (open?'none':'flex') + ';';
+  });
+
+  // ---- scroll reveal ----
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // ---- project data ----
+  const projects = {
+    relay:  { tag:'P.01', title:'Relay',  sub:'Workflow Automation Engine',
+      desc:'Event-driven automation platform connecting internal tools, replacing 40+ manual hand-offs with self-healing pipelines.',
+      stack:['TypeScript','Node.js','Temporal','PostgreSQL'], branches:['a','p01'] },
+    cortex: { tag:'P.02', title:'Cortex', sub:'LLM Orchestration Layer',
+      desc:'A routing and evaluation layer that picks the right model for the job, retries failures, and logs every decision for audit.',
+      stack:['Python','LangGraph','Redis','FastAPI'], branches:['a'] },
+    ledger: { tag:'P.03', title:'Ledger', sub:'Financial Reconciliation Bot',
+      desc:'Reads inbound invoices, matches them against ERP records, and flags anomalies before a human ever sees them.',
+      stack:['Python','OpenAI API','SQL','Airflow'], branches:['a','p03'] },
+    atlas:  { tag:'P.04', title:'Atlas',  sub:'Multi-tenant SaaS Platform',
+      desc:'Full-stack rebuild of a legacy monolith into a scalable, tenant-isolated platform serving 12k+ users.',
+      stack:['React','Next.js','Node.js','AWS'], branches:['b'] },
+    signal: { tag:'P.05', title:'Signal', sub:'Real-time Data Sync Engine',
+      desc:'Keeps three separate systems of record in sync within 200ms, with conflict resolution built in.',
+      stack:['Go','Kafka','gRPC','Docker'], branches:['b','p05'] },
+  };
+
+  const panel = document.getElementById('detail-panel');
+  const grid = document.getElementById('work-grid');
+
+  // ---- build cards from project data ----
+  Object.entries(projects).forEach(([id, p]) => {
+    const card = document.createElement('button');
+    card.className = 'card';
+    card.dataset.id = id;
+    card.innerHTML = `
+      <span class="tag">${p.tag} — ${p.sub}</span>
+      <span class="title">${p.title}</span>
+      <span class="sub">${p.desc}</span>
+      <span class="expand-cue">DETAILS</span>
+    `;
+    card.addEventListener('click', () => setActive(id));
+    grid.appendChild(card);
+  });
+
+  const cards = document.querySelectorAll('.card[data-id]');
+
+  function setActive(id){
+    cards.forEach(c => c.classList.toggle('active', c.dataset.id === id));
+    const p = projects[id];
+
+    panel.innerHTML = `
+      <div class="ph-tag">${p.tag} — ${p.sub}</div>
+      <h3>${p.title}</h3>
+      <p>${p.desc}</p>
+      <div class="stack-row">${p.stack.map(s => `<span class="pill">${s}</span>`).join('')}</div>
+    `;
+    panel.classList.remove('updating');
+    void panel.offsetWidth;
+    panel.classList.add('updating');
+  }
+</script>
+
+</body>
+</html>
